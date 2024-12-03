@@ -15,7 +15,8 @@ router.get("/", async function (req, res, next) {
 
 router.get("/:id", async function (req, res, next) {
   try {
-    let dog = await Dog.getById(req.params.id);
+    let dog = await Dog.getByID(req.params.id);
+    dog.speak()
     return res.json(dog);
   } catch (e) {
     return next(e);
@@ -32,33 +33,33 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-router.delete("/:id", async function (req, res, next) {
-  try {
-    let dog = await Dog.getById(req.params.id);
+router.delete('/:id', async (req, res, next) => {
+  try{
+    let dog = await Dog.getByID(req.params.id);
     await dog.remove();
-    return res.json({ msg: "deleted" });
+    return res.json({ msg: "Deleted" });
   } catch (e) {
     return next(e);
   }
 });
 
-router.patch("/:id/age", async function (req, res, next) {
-  try {
-    let dog = await Dog.getById(req.params.id);
-    dog.age += 1;
+router.patch("/:id/age", async (req, res, next) => {
+  try{
+    let dog = await Dog.getByID(req.params.id);
+    dog.age++;
     await dog.save();
-    return res.json(dog);
+    return res.json({ dog })
   } catch (e) {
     return next(e);
   }
 });
 
-router.patch("/:id/rename", async function (req, res, next) {
-  try {
-    let dog = await Dog.getById(req.params.id);
+router.patch("/:id/rename", async (req, res, next) => {
+  try{
+    let dog = await Dog.getByID(req.params.id);
     dog.name = req.body.name;
     await dog.save();
-    return res.json(dog);
+    return res.json({ dog })
   } catch (e) {
     return next(e);
   }

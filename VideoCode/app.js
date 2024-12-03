@@ -12,7 +12,6 @@ app.use(express.json());
 app.use("/cats", catRoutes);
 app.use("/dogs", dogRoutes);
 
-
 /** 404 handler */
 
 app.use(function (req, res, next) {
